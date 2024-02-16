@@ -6,17 +6,13 @@ const Profile = () => {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
 
-  const fetchUserProfile = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:4000/api/BL/v1/admin/adminProfile/${
-          JSON.parse(localStorage.getItem("user"))._id
-        }`
-      );
-      const { email } = response.data.data;
+  const fetchUserProfile = () => {
+    const userString = localStorage.getItem("user");
+    if (userString) {
+      const user = JSON.parse(userString);
+      const { email } = user; // Access email property from the parsed object
       setEmail(email);
-    } catch (error) {
-      console.error("Error fetching user profile:", error);
+      console.log(user, "items"); // Log the user object, not localStorage.getItem("user")
     }
   };
 

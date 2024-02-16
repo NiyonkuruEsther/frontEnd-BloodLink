@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MdDelete, MdEditNotifications } from "react-icons/md";
 import EditPopup from "./EditPopup";
 
-const Tooltip = ({item}) => {
+const Tooltip = ({ item, setShowTooltip }) => {
   const [showEditPopup, setShowEditPopup] = useState(false);
 
   return (
@@ -11,7 +11,9 @@ const Tooltip = ({item}) => {
         <ul className="m-0 p-2">
           <li
             className="flex gap-2 items-center cursor-pointer"
-            onClick={() => setShowEditPopup(true)}
+            onClick={() => {
+              setShowEditPopup(true);
+            }}
           >
             <MdEditNotifications className="m-0" /> Edit
           </li>
@@ -21,7 +23,9 @@ const Tooltip = ({item}) => {
           </li>
         </ul>
       </div>
-      {showEditPopup && <EditPopup setShowEditPopup={setShowEditPopup} item={item}/>}
+      {showEditPopup && (
+        <EditPopup setShowEditPopup={setShowEditPopup} item={item} />
+      )}
     </>
   );
 };

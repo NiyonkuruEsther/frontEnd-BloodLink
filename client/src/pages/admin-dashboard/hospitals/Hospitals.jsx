@@ -138,7 +138,9 @@ const Hospitals = () => {
                     >
                       <PiDotsThreeCircleVertical />
                     </a>
-                    {showTooltip[index] && <Tooltip item={item} />}
+                    {showTooltip[index] && (
+                      <Tooltip item={item} setShowTooltip={setShowTooltip} />
+                    )}
                   </td>
                 </tr>
               );

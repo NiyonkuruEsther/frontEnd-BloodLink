@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/Group 2410logo.svg";
 import "../styles/login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -60,13 +60,12 @@ const Login = () => {
         { email: formData.email, password: formData.password }
       );
       const user = allUsers.find((item) => formData.email === item.email);
-      console.log(user.role);
       localStorage.setItem("token", response.token);
       localStorage.setItem("user", JSON.stringify(user));
       if (user.role === "admin") {
         navigate("/admin/dashboard", { replace: true });
       } else {
-        navigate("/admin/profile", { replace: true });
+        navigate("/hospital/dashboard", { replace: true });
       }
     } catch (error) {
       console.error(error);

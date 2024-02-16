@@ -17,6 +17,8 @@ import ViewHospitals from "./pages/admin-dashboard/hospitals/index.jsx";
 import AdminDashBoard from "./pages/admin-dashboard/dashboard/index.jsx";
 import ViewBloodRequests from "./pages/admin-dashboard/request/index.jsx";
 import PrivateRoutes from "./PrivateRoutes.jsx";
+import HospitalDashboard from "./pages/hospital-dashboard/index.jsx";
+import RequestIn from "./pages/hospital-dashboard/RequestIn.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -34,6 +36,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route exact path="/donate_blood" element={<Donate_blood />} />
         <Route element={<PrivateRoutes />}>
           <Route exact path="/admin/dashboard" element={<AdminDashBoard />} />
+          <Route
+            exact
+            path="/hospital/dashboard"
+            element={<HospitalDashboard />}
+          />
+          <Route exact path="/hospital/requestIn" element={<RequestIn />} />
+
           <Route exact path="/admin/my-profile" element={<EditProfile />} />
           <Route exact path="/admin/hospitals" element={<ViewHospitals />} />
           <Route
