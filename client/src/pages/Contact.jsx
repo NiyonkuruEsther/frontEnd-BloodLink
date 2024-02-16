@@ -10,7 +10,7 @@ const Contact = () => {
       <div className="h-[10vh]">
         <Navigation />
       </div>
-      <section className="bg-black flex-1 flex justify-center items-center ">
+      <section className=" flex-1 flex justify-center items-center ">
         <div className="flex flex-col justify-center items-center h-full">
           <img src={bloodunscreen} alt="" />
         </div>
@@ -26,7 +26,7 @@ const Contact = () => {
                       </label>
                       <input
                         type="text"
-                        className="form-control"
+                        className="ring-1 ring-red-500 focus-within:ring-4 focus-within:ring-red-500 border border-red-500 w-full"
                         id="fullname"
                         name="fullname"
                         value=""
@@ -37,7 +37,7 @@ const Contact = () => {
                       <label htmlFor="email" className="form-label">
                         Email <span className="text-danger">*</span>
                       </label>
-                      <div className="input-group">
+                      <div className="input-group w-full">
                         <span className="input-group-text">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@ const Contact = () => {
                         </span>
                         <input
                           type="email"
-                          className="form-control"
+                          className="flex-1 ring-1 ring-red-500 focus-within:ring-4 focus-within:ring-red-500 border border-red-500"
                           id="email"
                           name="email"
                           value=""
@@ -79,7 +79,7 @@ const Contact = () => {
                         </span>
                         <input
                           type="tel"
-                          className="form-control"
+                          className="flex-1 ring-1 ring-red-500 focus-within:ring-4 focus-within:ring-red-500 border border-red-500 "
                           id="phone"
                           name="phone"
                           value=""
@@ -91,7 +91,7 @@ const Contact = () => {
                         Message <span className="text-danger">*</span>
                       </label>
                       <textarea
-                        className="form-control"
+                        className="ring-1 ring-red-500 focus-within:ring-4 focus-within:ring-red-500 border border-red-500 w-full"
                         id="message"
                         name="message"
                         rows="3"
