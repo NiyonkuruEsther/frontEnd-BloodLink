@@ -3,7 +3,7 @@ import "../assets/assets_1/vendor/boxicons/css/boxicons.min.css";
 
 const Side_bar = ({ children }) => {
   const logOut = () => {
-    // localStorage.removeItem("user");
+    localStorage.removeItem("user");
     localStorage.removeItem("token");
     window.location.replace("/home");
   };

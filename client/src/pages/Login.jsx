@@ -62,6 +62,7 @@ const Login = () => {
       const user = allUsers.find((item) => formData.email === item.email);
       console.log(user.role);
       localStorage.setItem("token", response.token);
+      localStorage.setItem("user", JSON.stringify(user));
       if (user.role === "admin") {
         navigate("/admin/dashboard", { replace: true });
       } else {

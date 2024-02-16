@@ -8,8 +8,12 @@ const Profile = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await axios.get("http://your-api-url/profile");
-      const { email } = response.data;
+      const response = await axios.get(
+        `http://localhost:4000/api/BL/v1/admin/adminProfile/${
+          JSON.parse(localStorage.getItem("user"))._id
+        }`
+      );
+      const { email } = response.data.data;
       setEmail(email);
     } catch (error) {
       console.error("Error fetching user profile:", error);
