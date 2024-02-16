@@ -49,7 +49,7 @@ const Navigation = () => {
             color="#f82424"
             style={{ color: "#f82424" }}
           >
-            Login/Register
+            Login
           </Link>
         </nav>
       </div>

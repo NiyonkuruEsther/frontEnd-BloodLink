@@ -73,9 +73,9 @@ const Login = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col h-screen">
       <Navigation />
-      <div className="mt-5">
+      <div className="flex-1 flex flex-col justify-center items-center h-full">
         <div className="cover">
           <form
             action=""
@@ -94,7 +94,7 @@ const Login = () => {
             <h2>Sign in</h2>
             <input
               type="text"
-              className="form-control"
+              className="ring-1 ring-red-500 focus-within:ring-4 focus-within:ring-red-500 border-none"
               name="email"
               value={formData.email}
               onChange={handleChange}
@@ -107,11 +107,12 @@ const Login = () => {
               value={formData.password}
               onChange={handleChange}
               placeholder="password"
+              className="ring-1 ring-red-500 focus-within:ring-4 focus-within:ring-red-500 border-none"
             />
             <br />
             <p className="text">
               Forgot password?{" "}
-              <a href="" style={{ color: "#f82424" }}>
+              <a href="/reset-password" style={{ color: "#f82424" }}>
                 Click here
               </a>
             </p>
@@ -120,18 +121,14 @@ const Login = () => {
               className="login-btn"
               style={{ background: "#f82424" }}
               type="submit"
-              // onClick={handleButtonClick}
             >
               Login
             </button>
             <br />
-            <p className="text">
-              Don't have an account? <a href="/hospitalsignup1">Sign Up here</a>
-            </p>
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
