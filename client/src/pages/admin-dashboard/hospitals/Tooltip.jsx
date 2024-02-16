@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MdDelete, MdEditNotifications } from "react-icons/md";
 import EditPopup from "./EditPopup";
 
-const Tooltip = () => {
+const Tooltip = ({item}) => {
   const [showEditPopup, setShowEditPopup] = useState(false);
 
   return (
@@ -21,7 +21,7 @@ const Tooltip = () => {
           </li>
         </ul>
       </div>
-      {showEditPopup && <EditPopup setShowEditPopup={setShowEditPopup} />}
+      {showEditPopup && <EditPopup setShowEditPopup={setShowEditPopup} item={item}/>}
     </>
   );
 };

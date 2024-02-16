@@ -1,79 +1,115 @@
+import { useState } from "react";
 import { MdClose } from "react-icons/md";
-import { nanoid } from "nanoid";
+import axios from "axios";
 
-const EditPopup = ({ setShowEditPopup }) => {
+const EditPopup = ({ setShowEditPopup, item }) => {
+  const [formData, setFormData] = useState({
+    hospitalName: item.hospitalName,
+    district: item.district,
+    province: item.province,
+    hospitalCode: item.hospitalCode
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("api", formData);
+      console.log(response.data);
+      setShowEditPopup(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div
       id="popup"
-      className="fixed z-[10000] bg-black bg-opacity-50 h-screen w-screen left-0 top-0 flex flex-col items-center justify-center "
+      className="fixed z-[10000] bg-black bg-opacity-50 h-screen w-screen left-0 top-0 flex flex-col items-center justify-center"
     >
-      <form className="max-w-md mx-auto p-5 w-[50vw] bg-white rounded-lg ml-auto flex flex-col">
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-md mx-auto p-5 w-[50vw] bg-white rounded-lg ml-auto flex flex-col"
+      >
         <div className="text-black flex justify-between mb-6">
           <h4>Hospital details</h4>
           <MdClose
             fontWeight={900}
             fontSize={30}
             className="cursor-pointer "
-            onClick={() => {
-              setShowEditPopup(false), console.log("Show");
-            }}
+            onClick={() => setShowEditPopup(false)}
           />
         </div>
         <div className="mb-3">
           <label
-            htmlFor="email"
+            htmlFor="hospitalName"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             Hospital name
           </label>
           <input
-            type="email"
-            id="email"
+            type="text"
+            id="hospitalName"
+            name="hospitalName"
+            value={formData.hospitalName}
+            onChange={handleChange}
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus-within:!ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500 dark:shadow-sm-light"
-            placeholder="name@gmail.com"
           />
         </div>
         <div className="mb-3">
           <label
-            htmlFor="location"
+            htmlFor="district"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Location
+            District
           </label>
           <input
             type="text"
-            id="location"
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500 dark:shadow-sm-light"
+            id="district"
+            name="district"
+            value={formData.district}
+            onChange={handleChange}
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus-within:!ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500 dark:shadow-sm-light"
           />
         </div>
-        <div className="flex gap-3">
-          <div className="mb-5">
-            <label
-              htmlFor="repeat-password"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Category
-            </label>
-            <input
-              type="text"
-              id="repeat-password"
-              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500 dark:shadow-sm-light"
-            />
-          </div>
-          <div className="mb-5">
-            <label
-              htmlFor="repeat-password"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Donors
-            </label>
-            <input
-              type="text"
-              id="repeat-password"
-              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500 dark:shadow-sm-light"
-              disabled
-            />
-          </div>
+        <div className="mb-3">
+          <label
+            htmlFor="province"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Province
+          </label>
+          <input
+            type="text"
+            id="province"
+            name="province"
+            value={formData.province}
+            onChange={handleChange}
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus-within:!ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500 dark:shadow-sm-light"
+          />
+        </div>
+        <div className="mb-3">
+          <label
+            htmlFor="hospitalCode"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Hospital Code
+          </label>
+          <input
+            type="text"
+            id="hospitalCode"
+            name="hospitalCode"
+            value={formData.hospitalCode}
+            onChange={handleChange}
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus-within:!ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500 dark:shadow-sm-light"
+          />
         </div>
 
         <button

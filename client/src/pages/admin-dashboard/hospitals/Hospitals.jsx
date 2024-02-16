@@ -1,24 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PiDotsThreeCircleVertical } from "react-icons/pi";
 import Tooltip from "./Tooltip";
 import axios from "axios";
 import AddHospitalPopup from "./AddHospitalPopup";
 
 const Hospitals = () => {
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const [showAddHospitalPopup, setShowAddHospitalPopup] = useState(false);
+  const [hospitalData, setHospitalData] = useState([]);
+  const [showTooltip, setShowTooltip] = useState(
+    Array(hospitalData.length).fill(false)
+  );
 
-  const [hospitalData, setHospitalData] = useState({});
+  useEffect(() => {
+    const fetchHospitalData = async () => {
+      try {
+        const allHospitalsRequest = await axios.get(
+          "http://localhost:4000/api/BL/v1/hospital/list"
+        );
 
-  const getHospitals = async () => {
-    try {
-      const data = await axios.get(url).then((response) => {
-        setHospitalData(response.data);
-      });
-    } catch (error) {
-      console.error(error, "arror");
-    }
-  };
+        setHospitalData(allHospitalsRequest.data.hospitals);
+        console.log(allHospitalsRequest.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchHospitalData();
+  }, []);
+
+  const filteredHospitalData = hospitalData.filter((item) =>
+    item.hospitalName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-100">
@@ -52,6 +65,8 @@ const Hospitals = () => {
               id="table-search"
               className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
               placeholder="Search for items"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         </div>
@@ -80,7 +95,7 @@ const Hospitals = () => {
               Location
             </th>
             <th scope="col" className="px-6 py-3">
-              Category
+              Hospital Code
             </th>
             <th scope="col" className="px-6 py-3">
               Donors
@@ -91,124 +106,43 @@ const Hospitals = () => {
           </tr>
         </thead>
         <tbody>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <th
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
-              King faisal Hospitla
-            </th>
-            <td className="px-6 py-4">Kacyiru-Kigali</td>
-            <td className="px-6 py-4">Private</td>
-            <td className="px-6 py-4 font-semibold">3</td>
-            <td className="px-6 py-4 relative">
-              <a
-                href="#"
-                onClick={() => setShowTooltip(!showTooltip)}
-                className="font-medium text-red-600 dark:text-red-500 hover:underline text-2xl"
-              >
-                <PiDotsThreeCircleVertical />
-              </a>
-              {showTooltip && <Tooltip />}
-            </td>
-          </tr>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <th
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
-              Kacyiru hospital
-            </th>
-            <td className="px-6 py-4">Kacyiru-Kigali</td>
-            <td className="px-6 py-4">Public</td>
-            <td className="px-6 py-4 font-semibold">20</td>
-            <td className="px-6 py-4">
-              <a
-                href="#"
-                className="font-medium text-red-600 dark:text-red-500 hover:underline text-2xl"
-              >
-                <PiDotsThreeCircleVertical />
-              </a>
-            </td>
-          </tr>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <th
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
-              CHUK
-            </th>
-            <td className="px-6 py-4">Nyarugenge-kigali</td>
-            <td className="px-6 py-4">Public</td>
-            <td className="px-6 py-4 font-semibold">6</td>
-            <td className="px-6 py-4">
-              <a
-                href="#"
-                className="font-medium text-red-600 dark:text-red-500 hover:underline text-2xl"
-              >
-                <PiDotsThreeCircleVertical />
-              </a>
-            </td>
-          </tr>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <th
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
-              King faisal Hospitla
-            </th>
-            <td className="px-6 py-4">Kacyiru-Kigali</td>
-            <td className="px-6 py-4">Private</td>
-            <td className="px-6 py-4 font-semibold">3</td>
-            <td className="px-6 py-4 relative">
-              <a
-                href="#"
-                onClick={() => setShowTooltip(!showTooltip)}
-                className="font-medium text-red-600 dark:text-red-500 hover:underline text-2xl"
-              >
-                <PiDotsThreeCircleVertical />
-              </a>
-              {showTooltip && <Tooltip />}
-            </td>
-          </tr>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <th
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
-              Kacyiru hospital
-            </th>
-            <td className="px-6 py-4">Kacyiru-Kigali</td>
-            <td className="px-6 py-4">Public</td>
-            <td className="px-6 py-4 font-semibold">20</td>
-            <td className="px-6 py-4">
-              <a
-                href="#"
-                className="font-medium text-red-600 dark:text-red-500 hover:underline text-2xl"
-              >
-                <PiDotsThreeCircleVertical />
-              </a>
-            </td>
-          </tr>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <th
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
-              CHUK
-            </th>
-            <td className="px-6 py-4">Nyarugenge-kigali</td>
-            <td className="px-6 py-4">Public</td>
-            <td className="px-6 py-4 font-semibold">6</td>
-            <td className="px-6 py-4">
-              <a
-                href="#"
-                className="font-medium text-red-600 dark:text-red-500 hover:underline text-2xl"
-              >
-                <PiDotsThreeCircleVertical />
-              </a>
-            </td>
-          </tr>
+          {filteredHospitalData &&
+            filteredHospitalData.map((item, index) => {
+              return (
+                <tr
+                  key={index}
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                >
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {item.hospitalName}
+                  </th>
+                  <td className="px-6 py-4">
+                    {item.district}-{item.province}
+                  </td>
+                  <td className="px-6 py-4">{item.hospitalCode}</td>
+                  <td className="px-6 py-4 font-semibold">3</td>
+                  <td className="px-6 py-4 relative">
+                    <a
+                      href="#"
+                      onClick={() => {
+                        setShowTooltip((prevState) => {
+                          const newState = [...prevState];
+                          newState[index] = !newState[index];
+                          return newState;
+                        });
+                      }}
+                      className="font-medium text-red-600 dark:text-red-500 hover:underline text-2xl"
+                    >
+                      <PiDotsThreeCircleVertical />
+                    </a>
+                    {showTooltip[index] && <Tooltip item={item} />}
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>
