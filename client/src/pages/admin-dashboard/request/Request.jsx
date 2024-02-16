@@ -68,9 +68,9 @@ const Request = () => {
             <th scope="col" className="px-6 py-3">
               Category
             </th>
-            <th scope="col" className="px-6 py-3 text-center">
+            {/* <th scope="col" className="px-6 py-3 text-center">
               Donors
-            </th>
+            </th> */}
             <th scope="col" className="px-6 py-3 text-center">
               Detials
             </th>

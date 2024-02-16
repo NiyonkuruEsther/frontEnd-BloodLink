@@ -16,8 +16,7 @@ import EditProfile from "./pages/admin-dashboard/profile/index.jsx";
 import ViewHospitals from "./pages/admin-dashboard/hospitals/index.jsx";
 import AdminDashBoard from "./pages/admin-dashboard/dashboard/index.jsx";
 import ViewBloodRequests from "./pages/admin-dashboard/request/index.jsx";
-
-// const isAuthenticated = true;
+import PrivateRoutes from "./PrivateRoutes.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -33,18 +32,16 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/hospitalsignup1" element={<Hospitalsignup1 />} />
         <Route exact path="/donate_blood" element={<Donate_blood />} />
-
-        {/* {isAuthenticated && ( */}
-        <Route exact path="/admin/dashboard" element={<AdminDashBoard />} />
-        <Route exact path="/admin/my-profile" element={<EditProfile />} />
-        <Route exact path="/admin/hospitals" element={<ViewHospitals />} />
-        <Route
-          exact
-          path="/admin/bood-requests"
-          element={<ViewBloodRequests />}
-        />
-
-        {/* )} */}
+        <Route element={<PrivateRoutes />}>
+          <Route exact path="/admin/dashboard" element={<AdminDashBoard />} />
+          <Route exact path="/admin/my-profile" element={<EditProfile />} />
+          <Route exact path="/admin/hospitals" element={<ViewHospitals />} />
+          <Route
+            exact
+            path="/admin/bood-requests"
+            element={<ViewBloodRequests />}
+          />
+        </Route>
       </Routes>
     </Router>
   </React.StrictMode>

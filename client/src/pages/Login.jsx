@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import Logo from "../assets/Group 2410logo.svg";
 import "../styles/login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,6 +12,37 @@ const Login = () => {
     password: ""
   });
 
+  const [allUsers, setAllUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchAllUsers = async () => {
+      try {
+        const allAdminsRequest = await axios.get(
+          "http://localhost:4000/api/BL/v1/admin/listallAdmins"
+        );
+        const allHospitalsRequest = await axios.get(
+          "http://localhost:4000/api/BL/v1/hospital/list"
+        );
+        console.log(allAdminsRequest, allHospitalsRequest);
+        const [adminsResponse, hospitalsResponse] = await axios.all([
+          allAdminsRequest,
+          allHospitalsRequest
+        ]);
+
+        // Assuming the responses contain arrays of users
+        const allUsers = [
+          ...adminsResponse.data.data,
+          ...hospitalsResponse.data.hospitals
+        ];
+        setAllUsers(allUsers);
+      } catch (error) {
+        // Handle errors here
+        console.error(error);
+      }
+    };
+
+    fetchAllUsers();
+  }, []);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -19,52 +50,27 @@ const Login = () => {
       [name]: value
     }));
   };
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     try {
-      const response = axios.post("http://localhost:4000/api/BL/v1/auth/login");
-
-      if (response.ok) {
-        alert("Form data submitted successfully!");
+      const response = await axios.post(
+        "http://localhost:4000/api/BL/v1/auth/login",
+        { email: formData.email, password: formData.password }
+      );
+      const user = allUsers.find((item) => formData.email === item.email);
+      console.log(user.role);
+      localStorage.setItem("token", response.token);
+      if (user.role === "admin") {
+        navigate("/admin/dashboard", { replace: true });
       } else {
-        console.log(response);
-        alert("Email or password are incorrect");
-        // console.error('Failed to submit form data:', );
+        navigate("/admin/profile", { replace: true });
       }
     } catch (error) {
-      console.error(error)
-      // alert(res.error.message);
-      // console.error('Error during form submission:', error.message);
+      console.error(error);
     }
   };
-  // alert(JSON.stringify(formData, null, 2));
-  // window.alert(formData);
-
-  // these are the frontend functions to navigate the pages of the dashboards when logged in
-  const navigate = useNavigate();
-  const [selectedOption, setSelectedOption] = useState("");
-
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-
-  // const handleButtonClick = () => {
-  //   // Use a switch or if-else statement to determine the destination based on the selected option
-  //   switch (selectedOption) {
-  //     case "User":
-  //       navigate("/main_dashboard");
-  //       break;
-  //     case "Hospital":
-  //       navigate("/main_hospital_dashboard");
-  //       break;
-  //     // Add more cases as needed
-  //     default:
-  //       // Default case, navigate to a default page or handle accordingly
-  //       navigate("/home");
-  //   }
-  // };
 
   return (
     <>
