@@ -79,12 +79,6 @@ const Home = () => {
                   both parties. A reliable source, providing you the best
                   experience....
                 </p>
-
-                <div>
-                  <a href="#about" className="btn-find-donor scrollto">
-                    Find a Donor
-                  </a>
-                </div>
               </div>
               <div className="col-md-6 order-1 order-md-4 hero-img">
                 <img src={bloodgroup} className="img-fluid animated" alt="" />
