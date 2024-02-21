@@ -17,7 +17,10 @@ const SideBar = ({ children }) => {
           .get(`http://localhost:4000/api/BL/v1/appointment/listAppointments`)
           .then((response) => {
             console.log(response);
-            setBloodRequests(response.data.data);
+            const bloodRequest = response.data.data.map(
+              (item) => item.status !== "confirmed"
+            );
+            setBloodRequests(bloodRequest);
           });
       } catch (error) {
         console.error(error, "arror");
@@ -66,7 +69,9 @@ const SideBar = ({ children }) => {
                 <span className="flex-1 ms-3 whitespace-nowrap text-xl text-white ">
                   Requests In
                 </span>
-                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-xl  font-medium text-red-800 bg-white rounded-full dark:bg-red-900 dark:text-red-300">{bloodRequest.length}</span>
+                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-xl  font-medium text-red-800 bg-white rounded-full dark:bg-red-900 dark:text-red-300">
+                  {bloodRequest.length}
+                </span>
               </a>
             </li>
             <li>
@@ -87,7 +92,7 @@ const SideBar = ({ children }) => {
                   Requests Out
                 </span>
                 <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-xl  font-medium text-red-800 bg-white rounded-full dark:bg-red-900 dark:text-red-300">
-                  3
+                  2
                 </span>
               </a>
             </li>

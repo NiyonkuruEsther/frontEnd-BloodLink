@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { PiDotsThreeCircleVertical } from "react-icons/pi";
 import axios from "axios";
 import SideBar from "./SideBar";
+import Tooltip from "./Tooltip";
 
 const RequestIn = () => {
-  const [showTooltip, setShowTooltip] = useState(false);
-  //   const [showAddHospitalPopup, setShowAddHospitalPopup] = useState(false);
-
   const [bloodRequest, setBloodRequests] = useState([]);
+
+  const [showTooltip, setShowTooltip] = useState(
+    Array(bloodRequest.length).fill(false)
+  ); //   const [showAddHospitalPopup, setShowAddHospitalPopup] = useState(false);
 
   useEffect(() => {
     const getBloodRequests = async () => {
@@ -87,9 +89,9 @@ const RequestIn = () => {
                   {/* <th scope="col" className="px-6 py-3 text-center">
               Donors
             </th> */}
-                  {/* <th scope="col" className="px-6 py-3 text-center">
-                    Detials
-                  </th> */}
+                  <th scope="col" className="px-6 py-3 text-center">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -111,10 +113,29 @@ const RequestIn = () => {
                       >
                         {item.mobileNumber}
                       </th>
-
                       <td className="px-6 py-4">{item.district}</td>
-                      <td className="px-6 py-4 text-center">{item.bloodGroup}</td>
+                      <td className="px-6 py-4 text-center">
+                        {item.bloodGroup}
+                      </td>
                       <td className="px-6 py-4">{item.gender}</td>
+                      <td className="px-6 py-4 relative flex justify-center ">
+                        <PiDotsThreeCircleVertical
+                          className="w-fit text-red-600 text-2xl "
+                          onClick={() => {
+                            setShowTooltip((prevState) => {
+                              const newState = [...prevState];
+                              newState[index] = !newState[index];
+                              return newState;
+                            });
+                          }}
+                        />
+                        {showTooltip[index] && (
+                          <Tooltip
+                            item={item}
+                            setShowTooltip={setShowTooltip}
+                          />
+                        )}
+                      </td>{" "}
                     </tr>
                   );
                 })}

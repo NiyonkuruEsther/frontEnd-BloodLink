@@ -1,7 +1,21 @@
 import { MdClose } from "react-icons/md";
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
 
 const AddHospitalPopup = ({ setShowAddHospitalPopup }) => {
+  useEffect(() => {
+    const fetchHospitalData = async () => {
+      try {
+        const allHospitalsRequest = await axios.post(
+          "http://localhost:4000/api/BL/v1/hospital/addHospital"
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchHospitalData();
+  }, []);
   return (
     <div
       id="popup"

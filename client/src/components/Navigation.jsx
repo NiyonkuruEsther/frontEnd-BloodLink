@@ -15,7 +15,7 @@ const Navigation = () => {
         </div>
 
         <nav id="navbar" className="navbar container-fluid flex-grow-1">
-          <ul className="d-flex">
+          <ul className="d-flex d-flex justify-content-center align-items-center mb-0">
             <li className="nav-item">
               <Link to="/home" className="nav-link">
                 Home
