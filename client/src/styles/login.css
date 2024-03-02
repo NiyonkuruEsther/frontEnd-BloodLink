@@ -1,0 +1,49 @@
+
+.section_sign_in{
+    height: 10vh;
+}
+.img {
+    width: 90px;
+    height: 90px;
+    position: relative;
+    top: -2rem;
+
+}
+
+.cover {
+ 
+   /* padding: auto; */
+   /* margin: 10px 30px; */
+}
+ .input3{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+} 
+.input3 input{
+    width: 19rem;
+    height: 50px;
+    border-radius: 0px;
+}
+.input3 select{
+    width: 15rem;
+    height: 50px;
+    border-radius: 15px;
+}
+.cover a {
+    color: #f82424 !important;
+}
+.cover .text { 
+    color: black;
+}
+.cover .login-btn {
+    background-color: #f82424 !important;
+}
+.login-btn{
+    height: 50px;
+    width: 19rem;
+    color: white;
+    border: none;
+    border-radius: 6=5px;
+}
